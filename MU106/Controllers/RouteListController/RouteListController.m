@@ -35,15 +35,18 @@
     
     ApiRouteClient *sharedRouteClient = [ApiRouteClient sharedInstance];
     
+    [MBProgressHUD showHUDAddedTo:self.view animated:YES];
+    
     [sharedRouteClient updateRoutesListWithSuccess:^(NSArray *routes) {
         self.modelRoutes = (NSMutableArray *)routes;
-        [self.tableView reloadData];
+        dispatch_async(dispatch_get_main_queue(), ^{
+            [self.tableView reloadData];
+            [MBProgressHUD hideHUDForView:self.view animated:YES];
+        });
     } andFail:^(NSError *error) {
         NSLog(@"Error API %@", error.description);
     }];
     
-    [self.navigationItem setTitle:NSLocalizedString(@"ALL ROUTES", nil)];
-    self.modelRoutes = [[NSMutableArray alloc] init];
     
     // Uncomment the following line to preserve selection between presentations.
     // self.clearsSelectionOnViewWillAppear = NO;

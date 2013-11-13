@@ -40,6 +40,7 @@
 
 - (void)updateRoutesListWithSuccess:(void(^)(NSArray *routes))success andFail:(void(^)(NSError *error))failure
 {
+    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
     [self getPath:@"routes.php"
        parameters:nil
           success:^(AFHTTPRequestOperation *operation, id responseObject) {
@@ -71,6 +72,7 @@
               failure(error);
           }
      ];
+    });
     
 }
 
