@@ -10,8 +10,8 @@
 #import "Api.h"
 #import "Classes.h"
 
-@interface RouteListController : UITableViewController <ApiRouteClientDelegate>
-    
+@interface RouteListController : UITableViewController
+
     @property (strong, nonatomic) IBOutlet UITableView *tableView;
 
 @end

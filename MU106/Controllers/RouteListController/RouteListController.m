@@ -11,9 +11,8 @@
 
 @interface RouteListController ()
 
-    @property (strong, nonatomic) NSMutableArray *modelRoutes;
-    @property (strong, nonatomic) NSMutableArray *modelFavoriteRoutes;
-    
+    @property (strong, nonatomic) __block NSMutableArray *modelRoutes;
+
 @end
 
 @implementation RouteListController
@@ -31,19 +30,20 @@
 {
     [super viewDidLoad];
     
+    [self.navigationItem setTitle:NSLocalizedString(@"ALL ROUTES", nil)];
+    self.modelRoutes = [[NSMutableArray alloc] init];
+    
     ApiRouteClient *sharedRouteClient = [ApiRouteClient sharedInstance];
-    sharedRouteClient.delegate = self;
-    [sharedRouteClient updateRoutesList];
+    
+    [sharedRouteClient updateRoutesListWithSuccess:^(NSArray *routes) {
+        self.modelRoutes = (NSMutableArray *)routes;
+        [self.tableView reloadData];
+    } andFail:^(NSError *error) {
+        NSLog(@"Error API %@", error.description);
+    }];
     
     [self.navigationItem setTitle:NSLocalizedString(@"ALL ROUTES", nil)];
     self.modelRoutes = [[NSMutableArray alloc] init];
-    self.modelFavoriteRoutes = [[NSMutableArray alloc] init];
-    
-    
-//    for (int i=1; i<=10; i++) {
-//        [self.modelRoutes addObject:[NSString stringWithFormat:@"%@ %d",NSLocalizedString(@"ROUTE", nil), i]];
-//        [self.modelFavoriteRoutes addObject:[NSString stringWithFormat:@"%@ %d",NSLocalizedString(@"ROUTE", nil), i]];
-//    }
     
     // Uncomment the following line to preserve selection between presentations.
     // self.clearsSelectionOnViewWillAppear = NO;
@@ -62,18 +62,12 @@
     
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
-    return 1; //We have to groups: Starred and not starred
+    return 1;
 }
     
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    NSInteger rows;
-    //if (section == 0) {
-    //    rows = self.modelFavoriteRoutes.count;
-    //} else {
-        rows = self.modelRoutes.count;
-    //}
-    return rows;
+    return self.modelRoutes.count;
 }
     
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
@@ -101,13 +95,7 @@
     
 - (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section
 {
-    NSString *header;
-    if (section == 0) {
-        header = NSLocalizedString(@"FAVORITES", nil);
-    } else {
-        header = NSLocalizedString(@"ROUTES", nil);
-    }
-    return header;
+    return NSLocalizedString(@"ROUTES", nil);
 }
 
 #pragma mark - Table view delegate
@@ -126,26 +114,6 @@
 {
     //Height of cell in Storyboard
     return 53.f;
-}
-
-#pragma mark - ApiRouteClient delegate
-
-- (void)ApiRouteClient:(ApiRouteClient *)client didUpdateRoutes:(id)routes
-{
-    NSEnumerator *enumerator = [routes objectEnumerator];
-    id obj;
-    while ((obj = [enumerator nextObject]))
-    {
-        Route *route = [[Route alloc] initWithDictionary:(NSDictionary *)obj];
-        [self.modelRoutes addObject:route];
-        [self.tableView reloadData];
-        
-    }
-}
-
-- (void)ApiRouteClient:(ApiRouteClient *)client didFailWithError:(NSError *)error
-{
-    NSLog(@"Error API %@", error.description);
 }
 
 /*
