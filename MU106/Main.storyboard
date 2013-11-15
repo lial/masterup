@@ -39,9 +39,13 @@
                                             <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                             <nil key="highlightedColor"/>
                                         </label>
-                                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="oxL-3R-4o9">
+                                        <imageView contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="oxL-3R-4o9">
                                             <rect key="frame" x="220" y="13" width="26" height="26"/>
                                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                            <gestureRecognizers/>
+                                            <connections>
+                                                <outletCollection property="gestureRecognizers" destination="hCd-UM-qlB" appends="YES" id="vWw-5d-13R"/>
+                                            </connections>
                                         </imageView>
                                     </subviews>
                                 </tableViewCellContentView>
@@ -63,6 +67,11 @@
                     </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="byU-Z6-AxX" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <tapGestureRecognizer id="hCd-UM-qlB">
+                    <connections>
+                        <action selector="toggleFavorites:" destination="d3w-Wl-nyN" id="C41-dI-Kfd"/>
+                    </connections>
+                </tapGestureRecognizer>
             </objects>
             <point key="canvasLocation" x="-495" y="-102"/>
         </scene>
@@ -143,7 +152,7 @@
                     <navigationItem key="navigationItem" id="lxY-Ik-ehO">
                         <barButtonItem key="rightBarButtonItem" systemItem="bookmarks" id="G43-WZ-jw1">
                             <connections>
-                                <action selector="viewFavorites:" destination="va9-I4-k9P" id="d6L-YF-JwR"/>
+                                <action selector="addToFavorites:" destination="va9-I4-k9P" id="qwZ-ba-As9"/>
                                 <segue destination="Tch-3y-dNC" kind="push" id="YCN-xn-hKJ"/>
                             </connections>
                         </barButtonItem>

@@ -11,6 +11,13 @@
 #import "Classes.h"
 
 #define kApiBaseUrl @"http://itomy.ch/"
+#define kSettingsFilename @"/settings.plist"
+
+@interface ApiRouteClient()
+    
+- (NSString *)settingsFilePath;
+
+@end
 
 @implementation ApiRouteClient
 
@@ -66,6 +73,14 @@
                       return NSOrderedSame;
               }];
               
+              //Save last syncronization DateTime with server
+              NSDictionary *dict = @{@"lastUpdatedDateTime": [NSDate date]};
+              if ([dict writeToFile:[self settingsFilePath] atomically:YES]) {
+                  NSLog(@"Success write of settings.plist");
+              } else {
+                  NSLog(@"Error writing of settings.bplist");
+              }
+              
               success((NSArray *)result);
           }
           failure:^(AFHTTPRequestOperation *operation, NSError *error) {
@@ -74,6 +89,13 @@
      ];
     });
     
+}
+
+- (NSString *)settingsFilePath
+{
+    //Get path to Document directory in app bundle and return it with name of file
+    NSString *path = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) objectAtIndex:0];
+    return [path stringByAppendingString:kSettingsFilename];
 }
 
 @end

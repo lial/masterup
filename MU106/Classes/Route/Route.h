@@ -10,9 +10,9 @@
 
 @interface Route : NSObject
 
-    @property (strong, nonatomic) NSString *id;
+    @property (strong, nonatomic) NSString *routeId;
     @property (strong, nonatomic) NSString *title;
-    @property (strong, nonatomic) NSString *description;
+    @property (strong, nonatomic) NSString *routeDescription;
     @property (strong, nonatomic) NSString *path;
     @property (strong, nonatomic) NSString *price;
     @property (strong, nonatomic) NSString *ownerId;

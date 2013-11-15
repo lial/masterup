@@ -36,6 +36,7 @@
     // Dispose of any resources that can be recreated.
 }
 
-- (IBAction)viewFavorites:(id)sender {
+- (IBAction)addToFavorites:(id)sender {
+    
 }
 @end

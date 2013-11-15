@@ -1,5 +1,5 @@
 //
-//  Api.h
+//  Model.h
 //  MU106
 //
 //  Created by Alex Lifantyev on 06.11.13.

@@ -10,6 +10,6 @@
 
 @interface CenterController : UIViewController
 
-- (IBAction)viewFavorites:(id)sender;
+- (IBAction)addToFavorites:(id)sender;
 
 @end

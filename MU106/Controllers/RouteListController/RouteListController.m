@@ -82,15 +82,15 @@
     UIImage *imgStar;
     if (obj.isStarred) {
         imgStar = [UIImage imageNamed:@"star_active"];
-        cell.tag = 1;
+        //cell.tag = 1;
     } else {
         imgStar = [UIImage imageNamed:@"star_inactive"];
-        cell.tag = 0;
+        //cell.tag = 0;
     }
-    
+    cell.tag = [obj.routeId intValue];
     cell.lblRoute.text = obj.title;
     cell.lblPrice.text = [NSString stringWithFormat:@"%@ %@", obj.price, NSLocalizedString(@"SHORT CURRENCY", nil)];
-    cell.lblDescription.text = obj.description;
+    cell.lblDescription.text = obj.routeDescription;
     [cell.imgStarred setImage:imgStar];
     
     return cell;
@@ -106,11 +106,7 @@
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     RouteListCell *cell = (RouteListCell *)[tableView cellForRowAtIndexPath:indexPath];
-    if (cell.tag == 1) {
-        //NSLog(@"HIGHLITED !!!");
-    } else {
-        //NSLog(@" NOT HIGHLITED !!!");
-    }
+    NSLog(@"ID = %d",cell.tag);
 }
     
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
@@ -170,4 +166,7 @@
 
  */
 
+- (IBAction)toggleFavorites:(UITapGestureRecognizer *)sender {
+    NSLog(@"%@ touched",[sender.view class]);
+}
 @end
