@@ -10,9 +10,14 @@
 
 @interface ApiRouteClient : AFHTTPClient
 
+@property (readonly, strong, nonatomic) NSManagedObjectContext *managedObjectContext;
+@property (readonly, strong, nonatomic) NSManagedObjectModel *managedObjectModel;
+@property (readonly, strong, nonatomic) NSPersistentStoreCoordinator *persistentStoreCoordinator;
+
 + (id)sharedInstance;
 - (id)initWithBaseURL:(NSURL *)url;
-
-- (void)updateRoutesListWithSuccess:(void(^)(NSArray *routes))success andFail:(void(^)(NSError *error))failure;
+- (void)updateRoutesListWithSuccess:(void(^)(void))success andFail:(void(^)(NSError *error))failure;
+- (BOOL)isNeedUpdateRoutes;
+- (BOOL)saveContext;
 
 @end

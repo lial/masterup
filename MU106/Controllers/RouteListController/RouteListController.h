@@ -9,11 +9,12 @@
 #import <UIKit/UIKit.h>
 #import "Model.h"
 #import "Classes.h"
-#import "MBProgressHUD.h"
 
-@interface RouteListController : UITableViewController
+@interface RouteListController : UITableViewController <NSFetchedResultsControllerDelegate>
 
-    @property (strong, nonatomic) IBOutlet UITableView *tableView;
+@property (strong, nonatomic) IBOutlet UITableView *tableView;
+@property (strong, nonatomic) NSFetchedResultsController *fetchedResultsController;
+@property (strong, nonatomic) NSManagedObjectContext *managedObjectContext;
 
 - (IBAction)toggleFavorites:(UITapGestureRecognizer *)sender;
 

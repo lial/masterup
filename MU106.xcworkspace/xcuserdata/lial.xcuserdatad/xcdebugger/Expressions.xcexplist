@@ -3,10 +3,10 @@
    version = "1.0">
    <ContextStates>
       <ContextState
-         contextName = "GLOBAL">
+         contextName = "__54-[ApiRouteClient updateRoutesListWithSuccess:andFail:]_block_invoke_2:ApiRouteClient.m">
          <PersistentStrings>
             <PersistentString
-               value = "arrayTemp">
+               value = "result">
             </PersistentString>
          </PersistentStrings>
       </ContextState>
@@ -15,14 +15,6 @@
          <PersistentStrings>
             <PersistentString
                value = "self.modelRoutes">
-            </PersistentString>
-         </PersistentStrings>
-      </ContextState>
-      <ContextState
-         contextName = "__54-[ApiRouteClient updateRoutesListWithSuccess:andFail:]_block_invoke_2:ApiRouteClient.m">
-         <PersistentStrings>
-            <PersistentString
-               value = "result">
             </PersistentString>
          </PersistentStrings>
       </ContextState>

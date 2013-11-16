@@ -26,14 +26,24 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-	// Do any additional setup after loading the view.
-    //[self.navigationItem setTitle:NSLocalizedString(@"ALL ROUTES", nil)];
+
+	if ([[ApiRouteClient sharedInstance] isNeedUpdateRoutes]){
+        self.navigationItem.leftBarButtonItem.enabled = NO;
+        [MBProgressHUD showHUDAddedTo:self.view animated:YES];
+        
+        [[ApiRouteClient sharedInstance] updateRoutesListWithSuccess:^{
+            NSLog(@"Updated routes from server");
+            [MBProgressHUD hideHUDForView:self.view animated:YES];
+            self.navigationItem.leftBarButtonItem.enabled = YES;
+        } andFail:^(NSError *error) {
+            NSLog(@"Update routes from server: Error %@", error);
+        }];
+    }
 }
 
 - (void)didReceiveMemoryWarning
 {
     [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
 }
 
 - (IBAction)addToFavorites:(id)sender {

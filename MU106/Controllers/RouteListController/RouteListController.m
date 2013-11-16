@@ -9,9 +9,9 @@
 #import "RouteListController.h"
 #import "UI.h"
 
-@interface RouteListController ()
+#define kSettingsCoreDataCacheName @"Root"
 
-    @property (strong, nonatomic) __block NSMutableArray *modelRoutes;
+@interface RouteListController ()
 
 @end
 
@@ -31,26 +31,19 @@
     [super viewDidLoad];
     
     [self.navigationItem setTitle:NSLocalizedString(@"ALL ROUTES", nil)];
-    self.modelRoutes = [[NSMutableArray alloc] init];
+
+    self.managedObjectContext = [[ApiRouteClient sharedInstance] managedObjectContext];
     
-    ApiRouteClient *sharedRouteClient = [ApiRouteClient sharedInstance];
+    if (!self.managedObjectContext) {
+        NSLog(@"Managed object context is nill");
+    }
     
-    [MBProgressHUD showHUDAddedTo:self.view animated:YES];
+    NSError *error;
+	if (![[self fetchedResultsController] performFetch:&error]) {
+		NSLog(@"viewDidiLoad: Can't create fetshResultController %@, %@", error, [error userInfo]);
+	}
+    [NSFetchedResultsController deleteCacheWithName:kSettingsCoreDataCacheName];
     
-    [sharedRouteClient updateRoutesListWithSuccess:^(NSArray *routes) {
-        self.modelRoutes = (NSMutableArray *)routes;
-        dispatch_async(dispatch_get_main_queue(), ^{
-            [self.tableView reloadData];
-            [MBProgressHUD hideHUDForView:self.view animated:YES];
-        });
-    } andFail:^(NSError *error) {
-        NSLog(@"Error API %@", error.description);
-    }];
-    
-    
-    // Uncomment the following line to preserve selection between presentations.
-    // self.clearsSelectionOnViewWillAppear = NO;
- 
     // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
     // self.navigationItem.rightBarButtonItem = self.editButtonItem;
 }
@@ -70,27 +63,25 @@
     
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    return self.modelRoutes.count;
+    id <NSFetchedResultsSectionInfo> sectionInfo = [self.fetchedResultsController sections][section];
+    return [sectionInfo numberOfObjects];
 }
-    
+
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     static NSString *CellIdentifier = @"RouteListCell";
     RouteListCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
     
-    Route *obj = [self.modelRoutes objectAtIndex:indexPath.row];
+    Route *object = [self.fetchedResultsController objectAtIndexPath:indexPath];
+    cell.lblRoute.text = object.title;
+    cell.lblPrice.text = [NSString stringWithFormat:@"%@ %@", object.price, NSLocalizedString(@"SHORT CURRENCY", nil)];
+    cell.lblDescription.text = object.routeDescription;
     UIImage *imgStar;
-    if (obj.isStarred) {
+    if (object.isStarred) {
         imgStar = [UIImage imageNamed:@"star_active"];
-        //cell.tag = 1;
     } else {
         imgStar = [UIImage imageNamed:@"star_inactive"];
-        //cell.tag = 0;
     }
-    cell.tag = [obj.routeId intValue];
-    cell.lblRoute.text = obj.title;
-    cell.lblPrice.text = [NSString stringWithFormat:@"%@ %@", obj.price, NSLocalizedString(@"SHORT CURRENCY", nil)];
-    cell.lblDescription.text = obj.routeDescription;
     [cell.imgStarred setImage:imgStar];
     
     return cell;
@@ -105,8 +96,8 @@
     
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    RouteListCell *cell = (RouteListCell *)[tableView cellForRowAtIndexPath:indexPath];
-    NSLog(@"ID = %d",cell.tag);
+    //RouteListCell *cell = (RouteListCell *)[tableView cellForRowAtIndexPath:indexPath];
+    //NSLog(@"ID = %d",cell.tag);
 }
     
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
@@ -166,7 +157,42 @@
 
  */
 
+#pragma mark - Fetched results controller
+
+- (NSFetchedResultsController *)fetchedResultsController
+{
+    if (_fetchedResultsController != nil) {
+        return _fetchedResultsController;
+    }
+    
+    NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] init];
+    NSEntityDescription *entity = [NSEntityDescription entityForName:@"Route" inManagedObjectContext:self.managedObjectContext];
+    [fetchRequest setEntity:entity];
+    
+    [fetchRequest setFetchBatchSize:20];
+    
+    NSSortDescriptor *sortTitle = [[NSSortDescriptor alloc] initWithKey:@"title" ascending:YES];
+    NSSortDescriptor *sortStar = [[NSSortDescriptor alloc] initWithKey:@"isStarred" ascending:YES];
+    
+    NSArray *sortDescriptors = @[sortStar,sortTitle];
+    
+    [fetchRequest setSortDescriptors:sortDescriptors];
+    
+    NSFetchedResultsController *aFetchedResultsController = [[NSFetchedResultsController alloc] initWithFetchRequest:fetchRequest managedObjectContext:self.managedObjectContext sectionNameKeyPath:nil cacheName:kSettingsCoreDataCacheName];
+    aFetchedResultsController.delegate = self;
+    self.fetchedResultsController = aFetchedResultsController;
+    
+	NSError *error = nil;
+	if (![self.fetchedResultsController performFetch:&error]) {
+	    NSLog(@"Unresolved error %@, %@", error, [error userInfo]);
+	    abort();
+	}
+    
+    return _fetchedResultsController;
+}
+
 - (IBAction)toggleFavorites:(UITapGestureRecognizer *)sender {
     NSLog(@"%@ touched",[sender.view class]);
 }
+
 @end

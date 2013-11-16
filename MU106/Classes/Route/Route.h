@@ -7,17 +7,18 @@
 //
 
 #import <Foundation/Foundation.h>
+#import <CoreData/CoreData.h>
 
-@interface Route : NSObject
+@interface Route : NSManagedObject
 
-    @property (strong, nonatomic) NSString *routeId;
+    @property (strong, nonatomic) NSNumber *routeId;
     @property (strong, nonatomic) NSString *title;
     @property (strong, nonatomic) NSString *routeDescription;
     @property (strong, nonatomic) NSString *path;
-    @property (strong, nonatomic) NSString *price;
-    @property (strong, nonatomic) NSString *ownerId;
+    @property (strong, nonatomic) NSNumber *price;
+    @property (strong, nonatomic) NSNumber *ownerId;
     @property (nonatomic) BOOL isStarred;
 
-- (id)initWithDictionary:(NSDictionary *)dictionary;
+- (id)initWithEntity:(NSEntityDescription *)entity andDictionary:(NSDictionary *)dictionary insertIntoManagedObjectContext:(NSManagedObjectContext *)context;
 
 @end
