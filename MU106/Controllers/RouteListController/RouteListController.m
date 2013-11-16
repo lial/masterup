@@ -42,7 +42,7 @@
 	if (![[self fetchedResultsController] performFetch:&error]) {
 		NSLog(@"viewDidiLoad: Can't create fetshResultController %@, %@", error, [error userInfo]);
 	}
-    [NSFetchedResultsController deleteCacheWithName:kSettingsCoreDataCacheName];
+    //[NSFetchedResultsController deleteCacheWithName:kSettingsCoreDataCacheName];
     
     // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
     // self.navigationItem.rightBarButtonItem = self.editButtonItem;
@@ -53,7 +53,38 @@
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
 }
+
+- (void)configureCell:(RouteListCell *)cell atIndexPath:(NSIndexPath *)indexPath
+{
+    Route *object = [self.fetchedResultsController objectAtIndexPath:indexPath];
+    cell.lblRoute.text = object.title;
+    cell.lblPrice.text = [NSString stringWithFormat:@"%@ %@", object.price, NSLocalizedString(@"SHORT CURRENCY", nil)];
+    cell.lblDescription.text = object.routeDescription;
+    UIImage *imgStar;
+    if (object.isStarred) {
+        imgStar = [UIImage imageNamed:@"star_active"];
+    } else {
+        imgStar = [UIImage imageNamed:@"star_inactive"];
+    }
+    [cell.imgStarred setImage:imgStar];
+}
+
+- (IBAction)toggleFavorites:(UITapGestureRecognizer *)sender {
+
+    CGPoint location = [sender locationInView:self.view];
     
+    if (CGRectContainsPoint([self.view convertRect:self.tableView.frame fromView:self.tableView.superview], location))
+    {
+        CGPoint locationInTableview = [self.tableView convertPoint:location fromView:self.view];
+        NSIndexPath *indexPath = [self.tableView indexPathForRowAtPoint:locationInTableview];
+        if (indexPath){
+            Route *object = [self.fetchedResultsController objectAtIndexPath:indexPath];
+            object.isStarred = !object.isStarred;
+        }
+        return;
+    }
+}
+
 #pragma mark - Table view data source
     
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
@@ -71,18 +102,7 @@
 {
     static NSString *CellIdentifier = @"RouteListCell";
     RouteListCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
-    
-    Route *object = [self.fetchedResultsController objectAtIndexPath:indexPath];
-    cell.lblRoute.text = object.title;
-    cell.lblPrice.text = [NSString stringWithFormat:@"%@ %@", object.price, NSLocalizedString(@"SHORT CURRENCY", nil)];
-    cell.lblDescription.text = object.routeDescription;
-    UIImage *imgStar;
-    if (object.isStarred) {
-        imgStar = [UIImage imageNamed:@"star_active"];
-    } else {
-        imgStar = [UIImage imageNamed:@"star_inactive"];
-    }
-    [cell.imgStarred setImage:imgStar];
+    [self configureCell:cell atIndexPath:indexPath];
     
     return cell;
 }
@@ -97,7 +117,6 @@
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     //RouteListCell *cell = (RouteListCell *)[tableView cellForRowAtIndexPath:indexPath];
-    //NSLog(@"ID = %d",cell.tag);
 }
     
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
@@ -105,6 +124,7 @@
     //Height of cell in Storyboard
     return 53.f;
 }
+
 
 /*
 // Override to support conditional editing of the table view.
@@ -172,7 +192,7 @@
     [fetchRequest setFetchBatchSize:20];
     
     NSSortDescriptor *sortTitle = [[NSSortDescriptor alloc] initWithKey:@"title" ascending:YES];
-    NSSortDescriptor *sortStar = [[NSSortDescriptor alloc] initWithKey:@"isStarred" ascending:YES];
+    NSSortDescriptor *sortStar = [[NSSortDescriptor alloc] initWithKey:@"isStarred" ascending:NO];
     
     NSArray *sortDescriptors = @[sortStar,sortTitle];
     
@@ -191,8 +211,57 @@
     return _fetchedResultsController;
 }
 
-- (IBAction)toggleFavorites:(UITapGestureRecognizer *)sender {
-    NSLog(@"%@ touched",[sender.view class]);
+- (void)controllerWillChangeContent:(NSFetchedResultsController *)controller {
+    // The fetch controller is about to start sending change notifications, so prepare the table view for updates.
+    [self.tableView beginUpdates];
+}
+
+- (void)controller:(NSFetchedResultsController *)controller didChangeObject:(id)anObject atIndexPath:(NSIndexPath *)indexPath forChangeType:(NSFetchedResultsChangeType)type newIndexPath:(NSIndexPath *)newIndexPath {
+    
+    UITableView *tableView = self.tableView;
+    
+    switch(type) {
+            
+        case NSFetchedResultsChangeInsert:
+            [tableView insertRowsAtIndexPaths:[NSArray arrayWithObject:newIndexPath] withRowAnimation:UITableViewRowAnimationFade];
+            break;
+            
+        case NSFetchedResultsChangeDelete:
+            [tableView deleteRowsAtIndexPaths:[NSArray arrayWithObject:indexPath] withRowAnimation:UITableViewRowAnimationFade];
+            break;
+            
+        case NSFetchedResultsChangeUpdate:
+            [self configureCell:(RouteListCell *)[tableView cellForRowAtIndexPath:indexPath] atIndexPath:indexPath];
+            break;
+            
+        case NSFetchedResultsChangeMove:
+            [tableView deleteRowsAtIndexPaths:[NSArray
+                                               arrayWithObject:indexPath] withRowAnimation:UITableViewRowAnimationFade];
+            [tableView insertRowsAtIndexPaths:[NSArray
+                                               arrayWithObject:newIndexPath] withRowAnimation:UITableViewRowAnimationFade];
+            break;
+    }
+}
+
+
+- (void)controller:(NSFetchedResultsController *)controller didChangeSection:(id )sectionInfo atIndex:(NSUInteger)sectionIndex forChangeType:(NSFetchedResultsChangeType)type {
+    
+    switch(type) {
+            
+        case NSFetchedResultsChangeInsert:
+            [self.tableView insertSections:[NSIndexSet indexSetWithIndex:sectionIndex] withRowAnimation:UITableViewRowAnimationFade];
+            break;
+            
+        case NSFetchedResultsChangeDelete:
+            [self.tableView deleteSections:[NSIndexSet indexSetWithIndex:sectionIndex] withRowAnimation:UITableViewRowAnimationFade];
+            break;
+    }
+}
+
+
+- (void)controllerDidChangeContent:(NSFetchedResultsController *)controller {
+    // The fetch controller has sent all current change notifications, so tell the table view to process all updates.
+    [self.tableView endUpdates];
 }
 
 @end
