@@ -27,6 +27,7 @@
 {
     [super viewDidLoad];
     [self.map setShowsUserLocation:YES];
+    [self.map setUserTrackingMode:MKUserTrackingModeFollow animated:YES];
     
 	if ([[ApiRouteClient sharedInstance] isNeedUpdateRoutes]){
         self.navigationItem.leftBarButtonItem.enabled = NO;
