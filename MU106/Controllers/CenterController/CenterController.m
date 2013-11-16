@@ -26,7 +26,8 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-
+    [self.map setShowsUserLocation:YES];
+    
 	if ([[ApiRouteClient sharedInstance] isNeedUpdateRoutes]){
         self.navigationItem.leftBarButtonItem.enabled = NO;
         [MBProgressHUD showHUDAddedTo:self.view animated:YES];

@@ -31,6 +31,7 @@
 		8FBF46C018367FEB0002807A /* ApiRouteClient.m in Sources */ = {isa = PBXBuildFile; fileRef = 8FBF46BE18367FEB0002807A /* ApiRouteClient.m */; };
 		8FBF46C2183680870002807A /* CoreData.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8FBF46C1183680870002807A /* CoreData.framework */; };
 		8FBF46C51836895B0002807A /* Routes.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 8FBF46C31836895B0002807A /* Routes.xcdatamodeld */; };
+		8FBF47571837F76D0002807A /* MapKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8FBF47561837F76D0002807A /* MapKit.framework */; };
 		8FF7269418202172009E3D44 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 8FF7269318202172009E3D44 /* Main.storyboard */; };
 /* End PBXBuildFile section */
 
@@ -90,6 +91,7 @@
 		8FBF46BF18367FEB0002807A /* Model.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Model.h; sourceTree = "<group>"; };
 		8FBF46C1183680870002807A /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = System/Library/Frameworks/CoreData.framework; sourceTree = SDKROOT; };
 		8FBF46C41836895B0002807A /* Routes.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Routes.xcdatamodel; sourceTree = "<group>"; };
+		8FBF47561837F76D0002807A /* MapKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MapKit.framework; path = System/Library/Frameworks/MapKit.framework; sourceTree = SDKROOT; };
 		8FF7269318202172009E3D44 /* Main.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Main.storyboard; sourceTree = "<group>"; };
 		D93EAD705E6F43979638A009 /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
@@ -99,6 +101,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				8FBF47571837F76D0002807A /* MapKit.framework in Frameworks */,
 				8FBF46C2183680870002807A /* CoreData.framework in Frameworks */,
 				8F1D8F491827EF80005B1199 /* QuartzCore.framework in Frameworks */,
 				8F5408AD182002640099667C /* CoreGraphics.framework in Frameworks */,
@@ -202,6 +205,7 @@
 		8F5408A9182002640099667C /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				8FBF47561837F76D0002807A /* MapKit.framework */,
 				8FBF46C1183680870002807A /* CoreData.framework */,
 				8F75BC5B18294F4500643E62 /* SystemConfiguration.framework */,
 				8F75BC5918294F3D00643E62 /* MobileCoreServices.framework */,

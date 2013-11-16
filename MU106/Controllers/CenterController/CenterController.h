@@ -7,10 +7,13 @@
 //
 
 #import <UIKit/UIKit.h>
+#import <MapKit/MapKit.h>
 #import "MBProgressHUD.h"
 #import "Model.h"
 
 @interface CenterController : UIViewController
+
+@property (weak, nonatomic) IBOutlet MKMapView *map;
 
 - (IBAction)addToFavorites:(id)sender;
 
