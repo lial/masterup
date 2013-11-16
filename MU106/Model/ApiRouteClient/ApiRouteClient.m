@@ -133,6 +133,8 @@
         _managedObjectContext = [[NSManagedObjectContext alloc] init];
         [_managedObjectContext setPersistentStoreCoordinator:coordinator];
     }
+    self.hasChangesInManagedContext = NO;
+    
     return _managedObjectContext;
 }
 
@@ -173,6 +175,7 @@
             NSLog(@"ApiRouteClient:saveContext - Error %@, %@", error, [error userInfo]);
             return NO;
         } else {
+            self.hasChangesInManagedContext = NO;
             return YES;
         }
     } else {

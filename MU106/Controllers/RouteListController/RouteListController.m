@@ -33,7 +33,7 @@
     [self.navigationItem setTitle:NSLocalizedString(@"ALL ROUTES", nil)];
 
     self.managedObjectContext = [[ApiRouteClient sharedInstance] managedObjectContext];
-    
+
     if (!self.managedObjectContext) {
         NSLog(@"Managed object context is nill");
     }
@@ -72,6 +72,7 @@
 - (IBAction)toggleFavorites:(UITapGestureRecognizer *)sender {
 
     CGPoint location = [sender locationInView:self.view];
+    [[ApiRouteClient sharedInstance] setHasChangesInManagedContext:YES];
     
     if (CGRectContainsPoint([self.view convertRect:self.tableView.frame fromView:self.tableView.superview], location))
     {

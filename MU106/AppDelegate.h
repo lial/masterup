@@ -8,6 +8,7 @@
 
 #import <UIKit/UIKit.h>
 #import "AFNetworking.h"
+#import "Model.h"
 
 @interface AppDelegate : UIResponder <UIApplicationDelegate>
 
