@@ -41,6 +41,7 @@
             NSLog(@"Update routes from server: Error %@", error);
         }];
     }
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(notificationRouteSelected:) name:kNotificationRouteSelected object:nil];
 }
 
 - (void)didReceiveMemoryWarning
@@ -51,4 +52,10 @@
 - (IBAction)addToFavorites:(id)sender {
     
 }
+
+- (void)notificationRouteSelected:(NSNotification *)notification
+{
+    self.routeSelected = (Route *)notification.object;
+}
+
 @end

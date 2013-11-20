@@ -8,12 +8,10 @@
 
 #import "RouteListController.h"
 #import "UI.h"
+#import "JASidePanelController.h"
+#import "UIViewController+JASidePanel.h"
 
 #define kSettingsCoreDataCacheName @"Root"
-
-@interface RouteListController ()
-
-@end
 
 @implementation RouteListController
 
@@ -119,7 +117,9 @@
     
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    //RouteListCell *cell = (RouteListCell *)[tableView cellForRowAtIndexPath:indexPath];
+    Route *obj = [self.fetchedResultsController objectAtIndexPath:indexPath];
+    [[NSNotificationCenter defaultCenter] postNotificationName:kNotificationRouteSelected object:obj];
+    [self.sidePanelController showCenterPanelAnimated:YES];
 }
     
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
