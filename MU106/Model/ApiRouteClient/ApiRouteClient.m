@@ -67,7 +67,7 @@
               
               while ((obj = [enumerator nextObject]))
               {
-                  Route *route = [[Route alloc] initWithEntity:entity andDictionary:(NSDictionary *)obj insertIntoManagedObjectContext:self.managedObjectContext];
+                  __unused Route *route = [[Route alloc] initWithEntity:entity andDictionary:(NSDictionary *)obj insertIntoManagedObjectContext:self.managedObjectContext];
               }
               
 // Result array sorting is rest as an example
@@ -103,7 +103,7 @@
 
 - (BOOL)isNeedUpdateRoutes {
     
-    //TODO: Need to check is route's list lates or not
+    //TODO: Need to check is route's list latest or not
     //Now will check existence of sqlite file
     BOOL result = NO;
     NSFileManager *fileManager = [NSFileManager defaultManager];

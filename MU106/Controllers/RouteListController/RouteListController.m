@@ -82,8 +82,10 @@
             Route *object = [self.fetchedResultsController objectAtIndexPath:indexPath];
             object.isStarred = !object.isStarred;
         }
-        return;
+        //return;
     }
+    [[ApiRouteClient sharedInstance] saveContext];
+    return;
 }
 
 #pragma mark - Table view data source

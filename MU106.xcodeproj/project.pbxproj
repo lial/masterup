@@ -8,7 +8,6 @@
 
 /* Begin PBXBuildFile section */
 		4FCEF3F877AB4352B87ED7CB /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = D93EAD705E6F43979638A009 /* libPods.a */; };
-		8F1D8F421827EAAB005B1199 /* JASidePanelController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8F1D8F411827EAAB005B1199 /* JASidePanelController.m */; };
 		8F1D8F491827EF80005B1199 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8F1D8F481827EF80005B1199 /* QuartzCore.framework */; };
 		8F1D8F4C1827F083005B1199 /* SidePanelController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8F1D8F4B1827F083005B1199 /* SidePanelController.m */; };
 		8F1D8F501827F163005B1199 /* CenterController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8F1D8F4F1827F163005B1199 /* CenterController.m */; };
@@ -47,9 +46,6 @@
 
 /* Begin PBXFileReference section */
 		2DF3CCA67428454C91868C83 /* Pods.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.xcconfig; path = Pods/Pods.xcconfig; sourceTree = "<group>"; };
-		8F1D8F401827EAAB005B1199 /* JASidePanelController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JASidePanelController.h; sourceTree = "<group>"; };
-		8F1D8F411827EAAB005B1199 /* JASidePanelController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JASidePanelController.m; sourceTree = "<group>"; };
-		8F1D8F431827EACA005B1199 /* External.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = External.h; path = External/External.h; sourceTree = "<group>"; };
 		8F1D8F481827EF80005B1199 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
 		8F1D8F4A1827F083005B1199 /* SidePanelController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SidePanelController.h; path = Controllers/SidePanelController/SidePanelController.h; sourceTree = "<group>"; };
 		8F1D8F4B1827F083005B1199 /* SidePanelController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SidePanelController.m; path = Controllers/SidePanelController/SidePanelController.m; sourceTree = "<group>"; };
@@ -124,26 +120,6 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		8F1D8F3D1827E98B005B1199 /* External */ = {
-			isa = PBXGroup;
-			children = (
-				8F1D8F3F1827EAAB005B1199 /* JASidePanel */,
-				8F1D8F431827EACA005B1199 /* External.h */,
-			);
-			name = External;
-			path = MU106;
-			sourceTree = "<group>";
-		};
-		8F1D8F3F1827EAAB005B1199 /* JASidePanel */ = {
-			isa = PBXGroup;
-			children = (
-				8F1D8F401827EAAB005B1199 /* JASidePanelController.h */,
-				8F1D8F411827EAAB005B1199 /* JASidePanelController.m */,
-			);
-			name = JASidePanel;
-			path = External/JASidePanel;
-			sourceTree = "<group>";
-		};
 		8F1D8F4D1827F087005B1199 /* SidePanelController */ = {
 			isa = PBXGroup;
 			children = (
@@ -184,7 +160,6 @@
 			isa = PBXGroup;
 			children = (
 				8F5408B0182002640099667C /* MU106 */,
-				8F1D8F3D1827E98B005B1199 /* External */,
 				8F5408C2182002640099667C /* Images.xcassets */,
 				8F5408CF182002640099667C /* MU106Tests */,
 				8F5408A9182002640099667C /* Frameworks */,
@@ -468,7 +443,6 @@
 				8F1D8F501827F163005B1199 /* CenterController.m in Sources */,
 				8FBF46C018367FEB0002807A /* ApiRouteClient.m in Sources */,
 				8F5408EE182008430099667C /* RouteListCell.m in Sources */,
-				8F1D8F421827EAAB005B1199 /* JASidePanelController.m in Sources */,
 				8F5408BB182002640099667C /* AppDelegate.m in Sources */,
 				8FBF46C51836895B0002807A /* Routes.xcdatamodeld in Sources */,
 				8F5408B7182002640099667C /* main.m in Sources */,
