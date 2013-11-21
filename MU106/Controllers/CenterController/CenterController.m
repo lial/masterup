@@ -26,6 +26,7 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    self.polylines = [[NSMutableArray alloc] init];
     [self.map setShowsUserLocation:YES];
     [self.map setUserTrackingMode:MKUserTrackingModeFollow animated:YES];
     
@@ -55,7 +56,40 @@
 
 - (void)notificationRouteSelected:(NSNotification *)notification
 {
+    [self.map removeOverlays:self.polylines];
+    [self.polylines removeAllObjects];
     self.routeSelected = (Route *)notification.object;
+    self.title = self.routeSelected.title;
+    NSData *routePath = [self.routeSelected.path dataUsingEncoding:NSUTF8StringEncoding];
+    NSArray *path = [NSJSONSerialization JSONObjectWithData:routePath options:0 error:nil];
+    
+    if (path) {
+        CLLocationCoordinate2D coords[[path count]];
+        int i=0;
+        for (NSDictionary *coord in path) {
+            coords[i++] = CLLocationCoordinate2DMake([[coord objectForKey:@"x"] floatValue], [[coord objectForKey:@"y"] floatValue]);
+        }
+        MKPolyline *polyline = [MKPolyline polylineWithCoordinates:coords count:[path count]];
+        [self.map addOverlay:polyline];
+        [self.polylines addObject:polyline];
+        
+        MKPolygon *polygon = [MKPolygon polygonWithPoints:polyline.points count:polyline.pointCount];
+        [self.map setRegion:MKCoordinateRegionForMapRect([polygon boundingMapRect]) animated:YES];
+        }
+    NSLog(@"DATA = %@", path);
+}
+
+- (MKOverlayView *)mapView:(MKMapView *)mapView viewForOverlay:(id<MKOverlay>)overlay
+{
+    if ([overlay isKindOfClass:[MKPolyline class]]) {
+        MKPolyline *polyline = (MKPolyline *)overlay;
+        MKPolylineView *polylineView = [[MKPolylineView alloc] initWithPolyline:polyline];
+        polylineView.strokeColor = [UIColor redColor];
+        polylineView.lineWidth = 3;
+        
+        return polylineView;
+    }
+    return nil;
 }
 
 @end

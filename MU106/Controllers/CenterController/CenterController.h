@@ -16,6 +16,7 @@
 
 @property (weak, nonatomic) IBOutlet MKMapView *map;
 @property (strong, nonatomic) Route *routeSelected;
+@property (strong, nonatomic) NSMutableArray *polylines;
 
 - (IBAction)addToFavorites:(id)sender;
 
