@@ -11,6 +11,7 @@
 		8F1D8F491827EF80005B1199 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8F1D8F481827EF80005B1199 /* QuartzCore.framework */; };
 		8F1D8F4C1827F083005B1199 /* SidePanelController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8F1D8F4B1827F083005B1199 /* SidePanelController.m */; };
 		8F1D8F501827F163005B1199 /* CenterController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8F1D8F4F1827F163005B1199 /* CenterController.m */; };
+		8F3D84B918422A3D00823DC9 /* RoutePoint.m in Sources */ = {isa = PBXBuildFile; fileRef = 8F3D84B818422A3D00823DC9 /* RoutePoint.m */; };
 		8F4804E61820FFF5003B3085 /* Route.m in Sources */ = {isa = PBXBuildFile; fileRef = 8F4804E51820FFF5003B3085 /* Route.m */; };
 		8F5408AB182002640099667C /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8F5408AA182002640099667C /* Foundation.framework */; };
 		8F5408AD182002640099667C /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8F5408AC182002640099667C /* CoreGraphics.framework */; };
@@ -51,6 +52,8 @@
 		8F1D8F4B1827F083005B1199 /* SidePanelController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SidePanelController.m; path = Controllers/SidePanelController/SidePanelController.m; sourceTree = "<group>"; };
 		8F1D8F4E1827F163005B1199 /* CenterController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CenterController.h; path = Controllers/CenterController/CenterController.h; sourceTree = "<group>"; };
 		8F1D8F4F1827F163005B1199 /* CenterController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CenterController.m; path = Controllers/CenterController/CenterController.m; sourceTree = "<group>"; };
+		8F3D84B718422A3D00823DC9 /* RoutePoint.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = RoutePoint.h; path = Classes/RoutePoint/RoutePoint.h; sourceTree = "<group>"; };
+		8F3D84B818422A3D00823DC9 /* RoutePoint.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = RoutePoint.m; path = Classes/RoutePoint/RoutePoint.m; sourceTree = "<group>"; };
 		8F4804E31820FFD3003B3085 /* Classes.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = Classes.h; path = Classes/Classes.h; sourceTree = "<group>"; };
 		8F4804E41820FFF5003B3085 /* Route.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Route.h; path = Classes/Route/Route.h; sourceTree = "<group>"; };
 		8F4804E51820FFF5003B3085 /* Route.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Route.m; path = Classes/Route/Route.m; sourceTree = "<group>"; };
@@ -138,11 +141,21 @@
 			name = CenterController;
 			sourceTree = "<group>";
 		};
+		8F3D84BA18422A4000823DC9 /* RoutePoint */ = {
+			isa = PBXGroup;
+			children = (
+				8F3D84B718422A3D00823DC9 /* RoutePoint.h */,
+				8F3D84B818422A3D00823DC9 /* RoutePoint.m */,
+			);
+			name = RoutePoint;
+			sourceTree = "<group>";
+		};
 		8F4804E21820FFB5003B3085 /* Classes */ = {
 			isa = PBXGroup;
 			children = (
 				8F4804E31820FFD3003B3085 /* Classes.h */,
 				8F4804E818210003003B3085 /* Route */,
+				8F3D84BA18422A4000823DC9 /* RoutePoint */,
 			);
 			name = Classes;
 			sourceTree = "<group>";
@@ -446,6 +459,7 @@
 				8F5408BB182002640099667C /* AppDelegate.m in Sources */,
 				8FBF46C51836895B0002807A /* Routes.xcdatamodeld in Sources */,
 				8F5408B7182002640099667C /* main.m in Sources */,
+				8F3D84B918422A3D00823DC9 /* RoutePoint.m in Sources */,
 				8F5408E6182005D70099667C /* RouteListController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

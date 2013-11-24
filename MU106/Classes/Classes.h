@@ -10,5 +10,6 @@
 #define MU106_Classes_h
 
 #import "Route/Route.h"
+#import "RoutePoint/RoutePoint.h"
 
 #endif

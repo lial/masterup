@@ -11,13 +11,13 @@
 
 @interface Route : NSManagedObject
 
-    @property (strong, nonatomic) NSNumber *routeId;
-    @property (strong, nonatomic) NSString *title;
-    @property (strong, nonatomic) NSString *routeDescription;
-    @property (strong, nonatomic) NSString *path;
-    @property (strong, nonatomic) NSNumber *price;
-    @property (strong, nonatomic) NSNumber *ownerId;
-    @property (nonatomic) BOOL isStarred;
+@property (strong, nonatomic) NSNumber *routeId;
+@property (strong, nonatomic) NSString *title;
+@property (strong, nonatomic) NSString *routeDescription;
+@property (strong, nonatomic) NSString *path;
+@property (strong, nonatomic) NSNumber *price;
+@property (strong, nonatomic) NSNumber *ownerId;
+@property (nonatomic) BOOL isStarred;
 
 - (id)initWithEntity:(NSEntityDescription *)entity andDictionary:(NSDictionary *)dictionary insertIntoManagedObjectContext:(NSManagedObjectContext *)context;
 

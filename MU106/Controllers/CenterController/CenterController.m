@@ -45,6 +45,11 @@
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(notificationRouteSelected:) name:kNotificationRouteSelected object:nil];
 }
 
+- (void)dealloc
+{
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
+}
+
 - (void)didReceiveMemoryWarning
 {
     [super didReceiveMemoryWarning];
